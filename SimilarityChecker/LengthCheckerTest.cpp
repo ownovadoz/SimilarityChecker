@@ -32,3 +32,27 @@ TEST(LengthChecker, FirstStringIsLongerByDouble)
 	unsigned int actual = lengthChecker.getSimilarityScore("test", "te");
 	EXPECT_EQ(expected, actual);
 }
+
+TEST(LengthChecker, SecondStringIsLongerByDouble)
+{
+	LengthChecker lengthChecker;
+	unsigned int expected = 0;
+	unsigned int actual = lengthChecker.getSimilarityScore("te", "test");
+	EXPECT_EQ(expected, actual);
+}
+
+TEST(LengthChecker, FirstStringIsLongerByMoreThanDouble)
+{
+	LengthChecker lengthChecker;
+	unsigned int expected = 0;
+	unsigned int actual = lengthChecker.getSimilarityScore("testt", "te");
+	EXPECT_EQ(expected, actual);
+}
+
+TEST(LengthChecker, SecondStringIsLongerByMoreThanDouble)
+{
+	LengthChecker lengthChecker;
+	unsigned int expected = 0;
+	unsigned int actual = lengthChecker.getSimilarityScore("te", "testt");
+	EXPECT_EQ(expected, actual);
+}
