@@ -11,7 +11,7 @@ unsigned int LengthChecker::getSimilarityScore(const string& str1, const string&
 
 	double score = (1.0 - (static_cast<double>(getLengthDifference(longer, shorter)) / shorter.length())) * 60.0;
 
-	return static_cast<int>(score);
+	return static_cast<unsigned int>(score);
 }
 
 const string& LengthChecker::getLonger(const string& str1, const string& str2) const
