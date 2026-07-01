@@ -139,6 +139,8 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AlphaChecker.cpp" />
+    <ClCompile Include="AlphaCheckerTest.cpp" />
     <ClCompile Include="LengthCheckerTest.cpp" />
     <ClCompile Include="LengthChecker.cpp" />
     <ClCompile Include="main.cpp" />
@@ -147,6 +149,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AlphaChecker.h" />
     <ClInclude Include="LengthChecker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
