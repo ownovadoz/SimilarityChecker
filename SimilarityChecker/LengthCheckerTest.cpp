@@ -1,42 +1,38 @@
 ﻿#include "gmock/gmock.h"
 #include "LengthChecker.h"
 
-TEST(LengthChecker, SameLengthString)
+class LengthCheckerTest : public ::testing::Test
 {
+public:
+	void run(const unsigned int expected, const unsigned int actual)
+	{
+		EXPECT_EQ(expected, actual);
+	}
+
 	LengthChecker lengthChecker;
-	unsigned int expected = 60;
-	unsigned int actual = lengthChecker.getSimilarityScore("test", "test");
-	EXPECT_EQ(expected, actual);
+};
+
+TEST_F(LengthCheckerTest, SameLengthString)
+{
+	run(60, lengthChecker.getSimilarityScore("test", "test"));
 }
 
-TEST(LengthChecker, FirstStringIsLonger)
+TEST_F(LengthCheckerTest, FirstStringIsLonger)
 {
-	LengthChecker lengthChecker;
-	unsigned int expected = 40;
-	unsigned int actual = lengthChecker.getSimilarityScore("test", "tes");
-	EXPECT_EQ(expected, actual);
+	run(40, lengthChecker.getSimilarityScore("test", "tes"));
 }
 
-TEST(LengthChecker, SecondStringIsLonger)
+TEST_F(LengthCheckerTest, SecondStringIsLonger)
 {
-	LengthChecker lengthChecker;
-	unsigned int expected = 40;
-	unsigned int actual = lengthChecker.getSimilarityScore("tes", "test");
-	EXPECT_EQ(expected, actual);
+	run(40, lengthChecker.getSimilarityScore("tes", "test"));
 }
 
-TEST(LengthChecker, GapIsMoreThanShorterWithFirstStringIsLonger)
+TEST_F(LengthCheckerTest, GapIsMoreThanShorterWithFirstStringIsLonger)
 {
-	LengthChecker lengthChecker;
-	unsigned int expected = 0;
-	unsigned int actual = lengthChecker.getSimilarityScore("test", "t");
-	EXPECT_EQ(expected, actual);
+	run(0, lengthChecker.getSimilarityScore("test", "t"));
 }
 
-TEST(LengthChecker, GapIsMoreThanShorterWithSecondStringIsLonger)
+TEST_F(LengthCheckerTest, GapIsMoreThanShorterWithSecondStringIsLonger)
 {
-	LengthChecker lengthChecker;
-	unsigned int expected = 0;
-	unsigned int actual = lengthChecker.getSimilarityScore("t", "test");
-	EXPECT_EQ(expected, actual);
+	run(0, lengthChecker.getSimilarityScore("t", "test"));
 }
