@@ -9,7 +9,7 @@ TEST(LengthChecker, SameLengthString)
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(LengthChecker, FirstStringIsLongerByOne)
+TEST(LengthChecker, FirstStringIsLonger)
 {
 	LengthChecker lengthChecker;
 	unsigned int expected = 40;
@@ -17,7 +17,7 @@ TEST(LengthChecker, FirstStringIsLongerByOne)
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(LengthChecker, SecondStringIsLongerByOne)
+TEST(LengthChecker, SecondStringIsLonger)
 {
 	LengthChecker lengthChecker;
 	unsigned int expected = 40;
@@ -25,34 +25,18 @@ TEST(LengthChecker, SecondStringIsLongerByOne)
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(LengthChecker, FirstStringIsLongerByDouble)
+TEST(LengthChecker, GapIsMoreThanShorterWithFirstStringIsLonger)
 {
 	LengthChecker lengthChecker;
 	unsigned int expected = 0;
-	unsigned int actual = lengthChecker.getSimilarityScore("test", "te");
+	unsigned int actual = lengthChecker.getSimilarityScore("test", "t");
 	EXPECT_EQ(expected, actual);
 }
 
-TEST(LengthChecker, SecondStringIsLongerByDouble)
+TEST(LengthChecker, GapIsMoreThanShorterWithSecondStringIsLonger)
 {
 	LengthChecker lengthChecker;
 	unsigned int expected = 0;
-	unsigned int actual = lengthChecker.getSimilarityScore("te", "test");
-	EXPECT_EQ(expected, actual);
-}
-
-TEST(LengthChecker, FirstStringIsLongerByMoreThanDouble)
-{
-	LengthChecker lengthChecker;
-	unsigned int expected = 0;
-	unsigned int actual = lengthChecker.getSimilarityScore("testt", "te");
-	EXPECT_EQ(expected, actual);
-}
-
-TEST(LengthChecker, SecondStringIsLongerByMoreThanDouble)
-{
-	LengthChecker lengthChecker;
-	unsigned int expected = 0;
-	unsigned int actual = lengthChecker.getSimilarityScore("te", "testt");
+	unsigned int actual = lengthChecker.getSimilarityScore("t", "test");
 	EXPECT_EQ(expected, actual);
 }
