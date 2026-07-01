@@ -1,4 +1,3 @@
-#include <iostream>
 #include "AlphaChecker.h"
 
 unsigned int AlphaChecker::getScore(const std::string& str1, const std::string& str2) const
@@ -8,7 +7,10 @@ unsigned int AlphaChecker::getScore(const std::string& str1, const std::string& 
 		return MIN_SCORE;
 	}
 
-	return 0;
+	int sameCnt = getSameCnt(str1, str2);
+	int totalCnt = getTotalCnt(str1, str2);
+
+	return static_cast<double>(sameCnt) / totalCnt * 40;
 }
 
 bool AlphaChecker::hasLowerCase(const std::string& str) const
@@ -25,10 +27,38 @@ bool AlphaChecker::hasLowerCase(const std::string& str) const
 
 unsigned int AlphaChecker::getSameCnt(const std::string& str1, const std::string& str2) const
 {
-	return 0;
+	std::unordered_set<char> set;
+
+	auto str1Set = getAlphaSet(str1);
+	auto str2Set = getAlphaSet(str2);
+
+	for (auto& ch : str1Set)
+	{
+		if (str2Set.find(ch) != str2Set.end())
+		{
+			set.insert(ch);
+		}
+	}
+
+	return set.size();
 }
 
 unsigned int AlphaChecker::getTotalCnt(const std::string& str1, const std::string& str2) const
 {
-	return 0;
+	auto str1Set = getAlphaSet(str1);
+	auto str2Set = getAlphaSet(str2);
+
+	return str1Set.size() + str2Set.size() - getSameCnt(str1, str2);
+}
+
+std::unordered_set<char> AlphaChecker::getAlphaSet(const std::string& str) const
+{
+	std::unordered_set<char> set;
+
+	for (auto& ch : str)
+	{
+		set.insert(ch);
+	}
+
+	return set;
 }

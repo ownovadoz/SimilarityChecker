@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <unordered_set>
 
 class AlphaChecker
 {
@@ -14,4 +15,5 @@ private:
 	bool hasLowerCase(const std::string& str) const;
 	unsigned int getSameCnt(const std::string& str1, const std::string& str2) const;
 	unsigned int getTotalCnt(const std::string& str1, const std::string& str2) const;
+	std::unordered_set<char> getAlphaSet(const std::string& str) const;
 };
