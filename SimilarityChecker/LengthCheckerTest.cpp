@@ -1,7 +1,7 @@
 ﻿#include "gmock/gmock.h"
 #include "LengthChecker.h"
 
-TEST(LengthChecker, SameString)
+TEST(LengthChecker, SameLengthString)
 {
 	LengthChecker lengthChecker;
 	int expected = 60;
