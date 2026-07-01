@@ -1,10 +1,11 @@
 ﻿#include <cmath>
+
 #include "LengthChecker.h"
 
 unsigned int LengthChecker::getSimilarityScore(const string& str1, const string& str2) const noexcept
 {
-	const string& longer = getLonger(str1, str2);
-	const string& shorter = getShorter(str1, str2);
+	const int longer = static_cast<int>(std::max(str1.length(), str2.length()));
+	const int shorter = static_cast<int>(std::min(str1.length(), str2.length()));
 
 	if (hasSameLength(longer, shorter))
 		return MAX_SCORE;
@@ -14,38 +15,33 @@ unsigned int LengthChecker::getSimilarityScore(const string& str1, const string&
 
 	double score = calcScore(longer, shorter);
 
-	if (score < 0)
+	if (isNegative(score))
 		return MIN_SCORE;
 
 	return static_cast<unsigned int>(score);
 }
 
-double LengthChecker::calcScore(const std::string& longer, const std::string& shorter) const
+bool LengthChecker::hasSameLength(const int longer, const int shorter) const
 {
-	return (1.0 - (static_cast<double>(getLengthDifference(longer, shorter)) / shorter.length())) * static_cast<double>(MAX_SCORE);
+	return (longer == shorter);
 }
 
-const string& LengthChecker::getLonger(const string& str1, const string& str2) const
+bool LengthChecker::isGapDoubleThanShorter(const int longer, const int shorter) const
 {
-	return (str1.length() > str2.length()) ? str1 : str2;
+	return getDiff(longer, shorter) >= (shorter * 2);
 }
 
-const string& LengthChecker::getShorter(const string& str1, const string& str2) const
+int LengthChecker::getDiff(const int longer, const int shorter) const
 {
-	return (str1.length() > str2.length()) ? str2 : str1;
+	return longer - shorter;
 }
 
-bool LengthChecker::hasSameLength(const string& longer, const string& shorter) const
+double LengthChecker::calcScore(const int longer, const int shorter) const
 {
-	return longer.length() == shorter.length();
+	return (1.0 - (static_cast<double>(getDiff(longer, shorter)) / shorter)) * static_cast<double>(MAX_SCORE);
 }
 
-bool LengthChecker::isGapDoubleThanShorter(const string& longer, const string& shorter) const
+bool LengthChecker::isNegative(const double score) const
 {
-	return getLengthDifference(longer, shorter) >= (shorter.length() * 2);
-}
-
-unsigned int LengthChecker::getLengthDifference(const string& longer, const string& shorter) const
-{
-	return longer.length() - shorter.length();
+	return (score < 0);
 }
