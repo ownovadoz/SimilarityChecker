@@ -35,3 +35,10 @@ TEST(AlphaChecker, AAandAAE)
 
 	EXPECT_EQ(20, checker.getScore("AA", "AAE"));
 }
+
+TEST(AlphaChecker, EmptyStrings)
+{
+	AlphaChecker checker;
+
+	EXPECT_EQ(0, checker.getScore("", ""));
+}
