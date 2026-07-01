@@ -8,3 +8,11 @@ TEST(LengthChecker, SameLengthString)
 	int actual = lengthChecker.getSimilarityScore("test", "test");
 	EXPECT_EQ(expected, actual);
 }
+
+TEST(LengthChecker, FirstStringIsLongerByOne)
+{
+	LengthChecker lengthChecker;
+	int expected = 40;
+	int actual = lengthChecker.getSimilarityScore("test", "tes");
+	EXPECT_EQ(expected, actual);
+}
