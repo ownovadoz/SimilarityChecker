@@ -13,7 +13,8 @@ public:
 
 private:
 	bool hasLowerCase(const std::string& str) const;
-	unsigned int getSameCnt(const std::string& str1, const std::string& str2) const;
-	unsigned int getTotalCnt(const std::string& str1, const std::string& str2) const;
-	std::unordered_set<char> getAlphaSet(const std::string& str) const;
+	unsigned int getSameCnt(const std::unordered_set<unsigned char>& set1, const std::unordered_set<unsigned char>& set2) const;
+	unsigned int getTotalCnt(const std::unordered_set<unsigned char>& set1, const std::unordered_set<unsigned char>& set2, const int sameCnt) const;
+	std::unordered_set<unsigned char> getAlphaSet(const std::string& str) const;
+	double calcScore(int sameCnt, int totalCnt) const;
 };

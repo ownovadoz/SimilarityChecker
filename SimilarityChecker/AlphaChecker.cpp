@@ -3,21 +3,25 @@
 unsigned int AlphaChecker::getScore(const std::string& str1, const std::string& str2) const
 {
 	if (hasLowerCase(str1) || hasLowerCase(str2))
-	{
 		return MIN_SCORE;
-	}
 
-	int sameCnt = getSameCnt(str1, str2);
-	int totalCnt = getTotalCnt(str1, str2);
+	auto set1 = getAlphaSet(str1);
+	auto set2 = getAlphaSet(str2);
 
-	return static_cast<double>(sameCnt) / totalCnt * 40;
+	int sameCnt = getSameCnt(set1, set2);
+	int totalCnt = getTotalCnt(set1, set2, sameCnt);
+
+	if (totalCnt == 0)
+		return MIN_SCORE;
+
+	return calcScore(sameCnt, totalCnt);
 }
 
 bool AlphaChecker::hasLowerCase(const std::string& str) const
 {
-	for (auto& ch : str)
-	{
-		if (std::islower(ch))
+	for (unsigned char uch : str)
+	{		
+		if (std::islower(uch))
 		{
 			return true;
 		}
@@ -25,40 +29,42 @@ bool AlphaChecker::hasLowerCase(const std::string& str) const
 	return false;
 }
 
-unsigned int AlphaChecker::getSameCnt(const std::string& str1, const std::string& str2) const
+unsigned int AlphaChecker::getSameCnt(const std::unordered_set<unsigned char>& set1, const std::unordered_set<unsigned char>& set2) const
 {
-	std::unordered_set<char> set;
+	const auto& small = (set1.size() < set2.size() ? set1 : set2);
+	const auto& large = (set1.size() < set2.size() ? set2 : set1);
 
-	auto str1Set = getAlphaSet(str1);
-	auto str2Set = getAlphaSet(str2);
-
-	for (auto& ch : str1Set)
+	unsigned int cnt = 0;
+	
+	for (auto& ch : small)
 	{
-		if (str2Set.find(ch) != str2Set.end())
+		if (large.find(ch) != large.end())
 		{
-			set.insert(ch);
+			++cnt;
 		}
 	}
 
-	return set.size();
+	return cnt;
 }
 
-unsigned int AlphaChecker::getTotalCnt(const std::string& str1, const std::string& str2) const
+unsigned int AlphaChecker::getTotalCnt(const std::unordered_set<unsigned char>& set1, const std::unordered_set<unsigned char>& set2, const int sameCnt) const
 {
-	auto str1Set = getAlphaSet(str1);
-	auto str2Set = getAlphaSet(str2);
-
-	return str1Set.size() + str2Set.size() - getSameCnt(str1, str2);
+	return set1.size() + set2.size() - sameCnt;
 }
 
-std::unordered_set<char> AlphaChecker::getAlphaSet(const std::string& str) const
+std::unordered_set<unsigned char> AlphaChecker::getAlphaSet(const std::string& str) const
 {
-	std::unordered_set<char> set;
+	std::unordered_set<unsigned char> set;
 
-	for (auto& ch : str)
+	for (unsigned char uch : str)
 	{
-		set.insert(ch);
+		set.insert(uch);
 	}
 
 	return set;
+}
+
+double AlphaChecker::calcScore(int sameCnt, int totalCnt) const
+{
+	return static_cast<double>(sameCnt) / totalCnt * MAX_SCORE;
 }
