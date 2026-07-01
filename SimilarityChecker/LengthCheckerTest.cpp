@@ -16,3 +16,11 @@ TEST(LengthChecker, FirstStringIsLongerByOne)
 	unsigned int actual = lengthChecker.getSimilarityScore("test", "tes");
 	EXPECT_EQ(expected, actual);
 }
+
+TEST(LengthChecker, SecondStringIsLongerByOne)
+{
+	LengthChecker lengthChecker;
+	unsigned int expected = 40;
+	unsigned int actual = lengthChecker.getSimilarityScore("tes", "test");
+	EXPECT_EQ(expected, actual);
+}
